@@ -1,0 +1,82 @@
+@if (loading()) {
+  <div class="spinner-wrap">
+    <mat-spinner diameter="48" />
+  </div>
+} @else if (parcel(); as p) {
+  <button mat-button (click)="goBack()" class="back-btn">
+    <mat-icon>arrow_back</mat-icon>
+    All Parcels
+  </button>
+
+  <mat-card class="parcel-card">
+    <mat-card-header>
+      <mat-card-title>Parcel #{{ p.id }}</mat-card-title>
+      <mat-card-subtitle>
+        <span class="status-badge" [class]="statusClass(p.currentStatus)">
+          {{ p.currentStatus }}
+        </span>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="label">Sender</span>
+          <span class="value">{{ p.senderName }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Recipient</span>
+          <span class="value">{{ p.recipientName }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Delivery Address</span>
+          <span class="value">{{ p.recipientAddress }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Created</span>
+          <span class="value">{{ p.createdAt | date:'dd MMM yyyy, HH:mm' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Last Updated</span>
+          <span class="value">{{ p.updatedAt | date:'dd MMM yyyy, HH:mm' }}</span>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" (click)="openUpdateStatus()">
+        <mat-icon>edit</mat-icon>
+        Update Status
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <h2 class="events-heading">Event History</h2>
+
+  @if (events().length === 0) {
+    <p class="no-events">No events recorded yet.</p>
+  } @else {
+    <table mat-table [dataSource]="events()" class="events-table mat-elevation-z1">
+
+      <ng-container matColumnDef="occurredAt">
+        <th mat-header-cell *matHeaderCellDef>Time</th>
+        <td mat-cell *matCellDef="let e">{{ e.occurredAt | date:'dd MMM yyyy, HH:mm:ss' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="eventType">
+        <th mat-header-cell *matHeaderCellDef>Event</th>
+        <td mat-cell *matCellDef="let e">{{ e.eventType }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="newStatus">
+        <th mat-header-cell *matHeaderCellDef>New Status</th>
+        <td mat-cell *matCellDef="let e">
+          <span class="status-badge" [class]="statusClass(e.newStatus)">{{ e.newStatus }}</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="eventColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: eventColumns"></tr>
+    </table>
+  }
+}

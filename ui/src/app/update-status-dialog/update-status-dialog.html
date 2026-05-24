@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Update Status</h2>
+<p mat-dialog-content style="margin-bottom: 0">
+  Current status: <strong>{{ data.currentStatus }}</strong>
+</p>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+    <mat-form-field appearance="outline">
+      <mat-label>New Status</mat-label>
+      <mat-select formControlName="status">
+        @for (s of statuses; track s) {
+          <mat-option [value]="s">{{ s }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid">
+    Update
+  </button>
+</mat-dialog-actions>

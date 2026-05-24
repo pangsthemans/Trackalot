@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>New Parcel</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Sender Name</mat-label>
+      <input matInput formControlName="senderName" placeholder="e.g. Alice" />
+      @if (form.controls.senderName.hasError('required')) {
+        <mat-error>Sender name is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Recipient Name</mat-label>
+      <input matInput formControlName="recipientName" placeholder="e.g. Bob" />
+      @if (form.controls.recipientName.hasError('required')) {
+        <mat-error>Recipient name is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Delivery Address</mat-label>
+      <input matInput formControlName="recipientAddress" placeholder="e.g. 123 Main St" />
+      @if (form.controls.recipientAddress.hasError('required')) {
+        <mat-error>Delivery address is required</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid">
+    Create
+  </button>
+</mat-dialog-actions>

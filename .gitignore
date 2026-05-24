@@ -13,6 +13,12 @@ project/project/
 # Metals (Scala LSP server) and BSP (Build Server Protocol) — generated per machine
 .metals/
 .bsp/
+.bloop/
+project/.bloop/
+project/metals.sbt
+
+# Installer packages
+*.pkg
 
 # OS files
 .DS_Store
